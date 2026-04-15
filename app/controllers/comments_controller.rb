@@ -1,5 +1,17 @@
 class CommentsController < ApplicationController
+  before_action :authenticate_user!, only: %i[ create destroy destroy toggle_like ]
   before_action :set_post, only: %i[ create destroy ]
+
+  def toggle_like
+    @comment = Comment.find(params[:id])
+    liked_post = Like.where(user_id: current_user.id, likeable_type: 'Comment', likeable_id: @comment.id)
+
+    if liked_post.any?
+      liked_post.destroy_all
+    else
+      Like.create(user_id: current_user.id, likeable_type: 'Comment', likeable_id: @comment.id)
+    end
+  end
 
   def create
     @comment = current_user.comments.new(params[:comment].permit(:body))

@@ -1,0 +1,10 @@
+<div class="reactionForm">
+  <% Reaction.kinds.each do |reaction_kind| %>
+    <%
+      is_active = Reaction.where(user_id: current_user.id, post_id: post.id, kind: reaction_kind[0])
+      active_class = is_active.any? ? "active" : ""
+    %>
+
+    <%= link_to "", toggle_reaction_post_path(post, reaction_kind[0]), class: "reaction #{reaction_kind[0]} #{active_class}", data: { turbo_stream: true } %>
+  <% end %>
+</div>

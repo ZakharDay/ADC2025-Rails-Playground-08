@@ -19,11 +19,33 @@
   </p>
 
   <%
-    is_favourite = FavouritePost.where(user_id: current_user.id, post_id: post.id)
-    favourite_link_text = is_favourite.any? ? "Unfavourite" : "Favourite"
+    if user_signed_in?
+      is_favourite = FavouritePost.where(user_id: current_user.id, post_id: post.id)
+      favourite_link_text = is_favourite.any? ? "Unfavourite" : "Favourite"
+  
+      is_liked = Like.where(user_id: current_user.id, likeable_type: "Post", likeable_id: post.id)
+      like_link_text = is_liked.any? ? "Unlike" : "Like"
+    end
   %>
 
   <p>
-    <%= link_to favourite_link_text, toggle_favourite_post_path(post), data: { turbo_stream: true } %>
+    <% if user_signed_in? %>
+      <%= link_to favourite_link_text, toggle_favourite_post_path(post), data: { turbo_stream: true } %>
+      <%= link_to like_link_text, toggle_like_post_path(post), data: { turbo_stream: true } %>
+    <% else %>
+      <%= link_to "Favourite", new_user_session_path %>
+      <%= link_to "Like", new_user_session_path %>
+    <% end %>
+
+    <br><br>
+
+    <%= render partial: "likes/counter", locals: { likeable: post } %>
   </p>
+
+  <div class="reactionsWrapper">
+    <%= render partial: "reactions/counter", locals: { post: post } %>
+    <%= render partial: "reactions/reaction_form", locals: { post: post } %>
+  </div>
+
+  <hr>
 </div>
