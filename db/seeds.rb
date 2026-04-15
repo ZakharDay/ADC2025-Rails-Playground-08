@@ -4,6 +4,7 @@
 def seed
   reset_db
   clean_uploads_folder
+  create_users(10)
   create_posts(10)
   create_comments(2..8)
 end
@@ -17,6 +18,22 @@ end
 def clean_uploads_folder
   FileUtils.rm_rf('public/uploads')
   puts "Uploads folder just cleaned"
+end
+
+def create_users(quantity)
+  i = 0
+
+  quantity.times do
+    user_data = {
+      email: "user_#{i}@email.com",
+      password: 'testtest'
+    }
+
+    user = User.create!(user_data)
+    puts "User created with id #{user.id}"
+
+    i += 1
+  end
 end
 
 def create_sentence
@@ -36,8 +53,10 @@ def upload_random_image
 end
 
 def create_posts(quantity)
+  user = User.all.sample
+
   quantity.times do
-    post = Post.create!(title: create_sentence, body: create_sentence, cover: upload_random_image)
+    post = user.posts.create!(title: create_sentence, body: create_sentence, cover: upload_random_image)
     puts "Post with id #{post.id} just created"
   end
 end
@@ -45,7 +64,8 @@ end
 def create_comments(quantity)
   Post.all.each do |post|
     quantity.to_a.sample.times do
-      comment = post.comments.create!(body: create_sentence)
+      user = User.all.sample
+      comment = post.comments.create!(body: create_sentence, user_id: user.id)
       puts "Comment with id #{comment.id} for post with id #{comment.post.id} just created"
     end
   end

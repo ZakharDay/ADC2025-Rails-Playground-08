@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_action :authenticate_user!, only: %i[ new edit create update destroy ]
   before_action :set_post, only: %i[ show edit update destroy ]
 
   # GET /posts or /posts.json
@@ -26,7 +27,8 @@ class PostsController < ApplicationController
 
   # POST /posts or /posts.json
   def create
-    @post = Post.new(post_params)
+    user = current_user
+    @post = current_user.posts.new(post_params)
 
     respond_to do |format|
       if @post.save
@@ -70,6 +72,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.expect(post: [ :title, :body, :author, :cover, :tag_list, :category_list ])
+      params.expect(post: [ :title, :body, :cover, :tag_list, :category_list ])
     end
 end

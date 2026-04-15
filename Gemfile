@@ -44,6 +44,7 @@ gem "carrierwave"
 gem "carrierwave-imageoptimizer"
 gem "russian"
 gem "acts-as-taggable-on"
+gem "devise"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

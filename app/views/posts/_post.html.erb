@@ -1,17 +1,18 @@
 <div id="<%= dom_id post %>">
-  <%= image_tag post.cover.url %>
-  <br>
-  <%= image_tag post.cover.thumb.url %>
-  <br>
-  <%= image_tag post.cover.q70.url %>
+  <%#= image_tag post.cover.url %>
+  <%# <br> %>
+  <%#= image_tag post.cover.thumb.url %>
+  <%# <br> %>
+  <%= image_tag post.cover.q70.url if post.cover.present? %>
 
-  <h2><%= post.title %></h2>
-  <p>Author: <%= post.author %></p>
-  <p><%= post.category_list %></p>
+  <h2><%= link_to post.title, post %></h2>
+  <p>Автор: <%= post.user.email %></p>
+  <p>Категория: <%= post.category_list %></p>
 
   <p><%= post.body %></p>
 
   <p>
+    Теги:
     <% post.tag_list.each do |tag| %>
       <%= link_to tag, by_tag_posts_path(tag) %>
     <% end %>
