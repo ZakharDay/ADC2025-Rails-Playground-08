@@ -17,4 +17,13 @@
       <%= link_to tag, by_tag_posts_path(tag) %>
     <% end %>
   </p>
+
+  <%
+    is_favourite = FavouritePost.where(user_id: current_user.id, post_id: post.id)
+    favourite_link_text = is_favourite.any? ? "Unfavourite" : "Favourite"
+  %>
+
+  <p>
+    <%= link_to favourite_link_text, toggle_favourite_post_path(post), data: { turbo_stream: true } %>
+  </p>
 </div>
