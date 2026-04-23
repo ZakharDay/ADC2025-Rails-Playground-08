@@ -1,3 +1,4 @@
+<% if current_user %>
 <div class="reactionForm">
   <% Reaction.kinds.each do |reaction_kind| %>
     <%
@@ -8,3 +9,4 @@
     <%= link_to "", toggle_reaction_post_path(post, reaction_kind[0]), class: "reaction #{reaction_kind[0]} #{active_class}", data: { turbo_stream: true } %>
   <% end %>
 </div>
+<% end %>
