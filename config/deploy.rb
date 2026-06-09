@@ -32,6 +32,8 @@ append :linked_files, "config/database.yml", "config/master.key", "config/puma.r
 # Default value for linked_dirs is []
 append :linked_dirs, "log", "public/uploads", "storage", "tmp", "vendor/javascript"
 
+# append :rbenv_map_bins, "puma", "pumactl"
+
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
