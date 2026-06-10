@@ -35,3 +35,6 @@
 .DS_Store
 /public/autoupload
 /public/uploads
+
+# Ignore HEX-Railsbox
+/HEX-Railsbox
