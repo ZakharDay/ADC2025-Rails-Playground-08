@@ -30,7 +30,7 @@ set :pty, true
 append :linked_files, "config/database.yml", "config/master.key", "config/puma.rb"
 
 # Default value for linked_dirs is []
-append :linked_dirs, "log", "public/uploads", "storage", "tmp", "vendor/javascript"
+append :linked_dirs, "log", "public/autoupload", "public/uploads", "storage", "tmp", "vendor/javascript"
 
 # append :rbenv_map_bins, "puma", "pumactl"
 
